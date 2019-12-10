@@ -45,13 +45,27 @@ export default function NoteEdit({ noteId }: React.PropsWithChildren<Props>) {
     history.push("/");
   }, [store, noteId, history]);
 
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
   return (
     <div>
-      <Link to="/">List</Link>
+      <h2>
+        <Link to="/">Back to your notes</Link>
+      </h2>
       <NoteForm value={note.attributes} onChange={updateNote} />
-      <Button onClick={onNoteDelete} danger>
-        Delete this note
-      </Button>
+      {deleteDialogOpen ? (
+        <div>
+          <h4>Are you sure you want to delete this note?</h4>
+          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+          <Button onClick={onNoteDelete} danger>
+            Yes
+          </Button>
+        </div>
+      ) : (
+        <Button onClick={() => setDeleteDialogOpen(true)} danger>
+          Delete this note
+        </Button>
+      )}
     </div>
   );
 }

@@ -2,29 +2,31 @@ import React from "react";
 import { NoteAttributes } from "../models/note";
 import { Link } from "react-router-dom";
 import "./NoteListItem.css";
-import Button from "./Button";
+import MarkdownEditor from "rich-markdown-editor";
 
 interface Props {
   attributes: NoteAttributes;
   noteId: string;
-  onDelete(): void;
 }
 
 export default function NoteListItem({
   attributes,
-  noteId,
-  onDelete
+  noteId
 }: React.PropsWithChildren<Props>) {
+  const previewText = firstNLines(10, attributes.text);
   return (
     <div className="NoteListItem">
-      <Link to={`/notes/${noteId}`}>
+      <Link className="inherit-color" to={`/notes/${noteId}`}>
         <h3>{attributes.title || "<No Title Yet>"}</h3>
       </Link>
-      <div className="flexContainer">
-        <Button onClick={onDelete} small danger>
-          Delete this note
-        </Button>
-      </div>
+      <MarkdownEditor defaultValue={previewText} readOnly dark />
     </div>
   );
+}
+
+function firstNLines(n: number, text: string): string {
+  return text
+    .split("\n", n + 1)
+    .slice(0, n)
+    .join("\n");
 }

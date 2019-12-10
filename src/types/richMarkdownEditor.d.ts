@@ -3,7 +3,7 @@ declare module "rich-markdown-editor" {
 
   interface MarkdownEditorProps {
     defaultValue: string;
-    onChange: (newValueGetter: () => string) => void;
+    onChange?: (newValueGetter: () => string) => void;
     dark?: boolean;
     autoFocus?: boolean;
     readOnly?: boolean;

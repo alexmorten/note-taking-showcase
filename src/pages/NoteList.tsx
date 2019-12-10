@@ -34,13 +34,9 @@ export default function NoteList(props: React.PropsWithChildren<{}>) {
 
   return (
     <div>
+      <h1>Your Notes</h1>
       {Object.entries(notes).map(([id, note]) => (
-        <NoteListItem
-          key={id}
-          attributes={note.attributes}
-          noteId={id}
-          onDelete={() => store.delete(id)}
-        />
+        <NoteListItem key={id} attributes={note.attributes} noteId={id} />
       ))}
 
       <Button onClick={addNewNote}>Add a new note</Button>
