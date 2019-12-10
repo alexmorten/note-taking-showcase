@@ -26,6 +26,7 @@ export default function NoteForm({
   return (
     <div className="NoteForm">
       <input
+        autoFocus={!value.title}
         className="TitleInput"
         value={value.title}
         placeholder="Add a title to your note"
@@ -33,9 +34,11 @@ export default function NoteForm({
       />
       <div className="MarkDownEditor">
         <MarkdownEditor
+          autoFocus={!!value.title}
           defaultValue={value.text}
           dark
           onChange={debouncedOnTextChange}
+          toc
         />
       </div>
     </div>

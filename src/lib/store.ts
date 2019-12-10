@@ -13,6 +13,18 @@ export interface Datum<AttributesType extends Object> {
   attributes: AttributesType;
 }
 
+export type SetChange<AttributesType> = {
+  changeType: "set";
+  datum: Datum<AttributesType>;
+};
+
+export type DeleteChange = {
+  changeType: "delete";
+  clientId: string;
+};
+
+export type Change<AttributesType> = SetChange<AttributesType> | DeleteChange;
+
 export interface PersistentStore<AttributesType> {
   set(item: Datum<AttributesType>): Promise<void>;
   list(): Promise<Datum<AttributesType>[]>;
@@ -21,7 +33,7 @@ export interface PersistentStore<AttributesType> {
 
 class State<AttributesType> {
   public current: { [k: string]: Datum<AttributesType> };
-  private changed: Datum<AttributesType>[];
+  private changed: Change<AttributesType>[];
   constructor() {
     this.current = {};
     this.changed = [];
@@ -35,10 +47,19 @@ class State<AttributesType> {
       ...this.current,
       [item.meta.clientId]: item
     };
-    this.changed.push(item);
+    this.changed.push({ changeType: "set", datum: item });
   }
 
-  public flushChanged(): Datum<AttributesType>[] {
+  public delete(id: string) {
+    this.current = {
+      ...this.current
+    };
+
+    delete this.current[id];
+    this.changed.push({ changeType: "delete", clientId: id });
+  }
+
+  public flushChanged(): Change<AttributesType>[] {
     const changesSinceLastFlush = this.changed;
     this.changed = [];
     return changesSinceLastFlush;
@@ -46,9 +67,11 @@ class State<AttributesType> {
 }
 
 export default class Store<AttributesType extends Object> {
-  private changeEmitter: Emitter<Datum<AttributesType>[]>;
+  private changeEmitter: Emitter<Change<AttributesType>[]>;
   private state: State<AttributesType>;
+
   private persistentStore: PersistentStore<AttributesType>;
+  private localUpdateQueue: Change<AttributesType>[];
 
   private localStateLoaded: boolean;
 
@@ -57,13 +80,13 @@ export default class Store<AttributesType extends Object> {
     this.state = new State();
     this.persistentStore = persitentStore;
     this.localStateLoaded = false;
-
+    this.localUpdateQueue = [];
     this.loadLocalState();
   }
 
   public subscribe(
-    handler: (changes: Datum<AttributesType>[]) => void,
-    filter: (changed: Datum<AttributesType>) => boolean
+    handler: (changes: Change<AttributesType>[]) => void,
+    filter: (changed: Change<AttributesType>) => boolean
   ): string {
     const subscriptionId = this.changeEmitter.subscribe(allChanges => {
       const filteredChanges = allChanges.filter(filter);
@@ -86,8 +109,8 @@ export default class Store<AttributesType extends Object> {
     await new Promise(resolve => {
       const subscriptionId = this.changeEmitter.subscribe(() => {
         if (this.localStateLoaded) {
-          resolve();
           this.changeEmitter.unsubscribe(subscriptionId);
+          resolve();
         }
       });
     });
@@ -100,16 +123,49 @@ export default class Store<AttributesType extends Object> {
   public set(item: Datum<AttributesType>) {
     this.state.set(item);
 
-    this.changeEmitter.emitChange(this.state.flushChanged());
+    this.emitLocalChanges();
+  }
 
+  public delete(id: string) {
+    this.state.delete(id);
+
+    this.emitLocalChanges();
+  }
+
+  private emitLocalChanges() {
+    const changes = this.state.flushChanged();
+    this.changeEmitter.emitChange(changes);
+
+    this.localUpdateQueue = this.localUpdateQueue.concat(changes);
     this.debouncedSaveToPersistentStore();
   }
 
   private async saveToPersistentStore() {
-    const dirtyItems = Object.entries(this.state.current)
-      .map(([key, item]) => item)
-      .filter(item => item.meta.localDirty);
-    await Promise.all(dirtyItems.map(item => this.persistentStore.set(item)));
+    const datumsToUpdate = this.localUpdateQueue.reduce((acc, change) => {
+      if (change.changeType === "set") {
+        acc[change.datum.meta.clientId] = this.state.current[
+          change.datum.meta.clientId
+        ];
+      }
+      return acc;
+    }, {} as { [k: string]: Datum<AttributesType> });
+
+    const idsToDelete = this.localUpdateQueue.reduce((acc, change) => {
+      if (change.changeType === "delete") {
+        acc[change.clientId] = true;
+      }
+      return acc;
+    }, {} as { [k: string]: boolean });
+
+    this.localUpdateQueue = [];
+
+    await Promise.all(
+      Object.entries(datumsToUpdate)
+        .map(([id, item]) => this.persistentStore.set(item))
+        .concat(
+          Object.keys(idsToDelete).map(id => this.persistentStore.delete(id))
+        )
+    );
   }
 
   private debouncedSaveToPersistentStore = debounce(

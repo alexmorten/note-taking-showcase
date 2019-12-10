@@ -3,15 +3,20 @@ import "./Button.css";
 interface Props {
   onClick(): void;
   small?: boolean;
+  danger?: boolean;
 }
 
 export default function Button({
   onClick,
   children,
-  small
+  small,
+  danger
 }: React.PropsWithChildren<Props>) {
   return (
-    <button className={`Button${small ? " small" : ""}`} onClick={onClick}>
+    <button
+      className={`Button${small ? " small" : ""}${danger ? " danger" : ""}`}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

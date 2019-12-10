@@ -4,9 +4,15 @@
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  margin: 10px;
 }
 
 .Button.small {
   line-height: 1rem;
   font-size: 0.75rem;
+}
+
+.Button.danger {
+  color: red;
+  border: 1px solid red;
 }

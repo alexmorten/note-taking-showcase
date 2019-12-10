@@ -21,7 +21,7 @@ export default function NoteListItem({
         <h3>{attributes.title || "<No Title Yet>"}</h3>
       </Link>
       <div className="flexContainer">
-        <Button onClick={onDelete} small>
+        <Button onClick={onDelete} small danger>
           Delete this note
         </Button>
       </div>

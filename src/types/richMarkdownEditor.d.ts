@@ -4,7 +4,10 @@ declare module "rich-markdown-editor" {
   interface MarkdownEditorProps {
     defaultValue: string;
     onChange: (newValueGetter: () => string) => void;
-    dark: boolean;
+    dark?: boolean;
+    autoFocus?: boolean;
+    readOnly?: boolean;
+    toc?: boolean;
   }
 
   export type Theme = {

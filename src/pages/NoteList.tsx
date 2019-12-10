@@ -39,7 +39,7 @@ export default function NoteList(props: React.PropsWithChildren<{}>) {
           key={id}
           attributes={note.attributes}
           noteId={id}
-          onDelete={() => {}}
+          onDelete={() => store.delete(id)}
         />
       ))}
 
