@@ -1,8 +1,12 @@
-.NoteForm .MarkDownEditor {
+.NoteForm .MarkDownEditor-container {
   max-width: 1000px;
   margin: auto;
   border-radius: 5px;
   overflow: hidden;
+}
+
+.NoteForm .MarkDownEditor-container .MarkDownEditor > div {
+  min-height: 100px;
 }
 
 .NoteForm .TitleInput {

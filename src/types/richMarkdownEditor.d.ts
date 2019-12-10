@@ -8,6 +8,7 @@ declare module "rich-markdown-editor" {
     autoFocus?: boolean;
     readOnly?: boolean;
     toc?: boolean;
+    className?: string;
   }
 
   export type Theme = {

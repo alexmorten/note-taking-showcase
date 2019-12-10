@@ -32,8 +32,9 @@ export default function NoteForm({
         placeholder="Add a title to your note"
         onChange={e => onChange({ ...value, title: e.target.value })}
       />
-      <div className="MarkDownEditor">
+      <div className="MarkDownEditor-container">
         <MarkdownEditor
+          className="MarkDownEditor"
           autoFocus={!!value.title}
           defaultValue={value.text}
           dark
