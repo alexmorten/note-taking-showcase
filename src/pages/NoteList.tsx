@@ -2,21 +2,24 @@ import React, { useContext, useState, useEffect } from "react";
 import { StoreContext } from "../providers/storeContext";
 import Button from "../components/Button";
 import randomIdentifier from "../utils/randomIdentifier";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function NoteList(props: React.PropsWithChildren<{}>) {
   const store = useContext(StoreContext);
   const [notes, setNotes] = useState(store.currentState());
-
+  const history = useHistory();
   const addNewNote = () => {
+    const id = randomIdentifier();
     store.set({
       meta: {
-        clientId: randomIdentifier(),
+        clientId: id,
         localDirty: true,
         remoteDirty: true
       },
-      attributes: { text: "", title: "a" }
+      attributes: { text: "", title: "" }
     });
+
+    history.push(`/notes/${id}`);
   };
 
   useEffect(() => {

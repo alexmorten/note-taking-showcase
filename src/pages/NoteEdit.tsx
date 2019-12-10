@@ -1,5 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import { StoreContext } from "../providers/storeContext";
+import NoteForm from "../components/NoteForm";
+import { NoteAttributes } from "../models/note";
+import { Link } from "react-router-dom";
 
 interface Props {
   noteId: string;
@@ -22,10 +25,22 @@ export default function NoteEdit({ noteId }: React.PropsWithChildren<Props>) {
     return () => store.unsubscribe(subscriptionId);
   }, [store, noteId]);
 
+  const updateNote = useCallback(
+    (attributes: NoteAttributes) => {
+      const newNote = {
+        attributes,
+        meta: { ...note.meta }
+      };
+
+      store.set(newNote);
+    },
+    [store, note]
+  );
+
   return (
     <div>
-      <h1>{note.attributes.title}</h1>
-      <p>{note.attributes.text}</p>
+      <Link to="/">List</Link>
+      <NoteForm value={note.attributes} onChange={updateNote} />
     </div>
   );
 }

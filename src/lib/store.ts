@@ -114,7 +114,7 @@ export default class Store<AttributesType extends Object> {
 
   private debouncedSaveToPersistentStore = debounce(
     this.saveToPersistentStore,
-    5000
+    1000
   );
 
   private async loadLocalState() {
