@@ -39,6 +39,13 @@ export default function NoteList(props: React.PropsWithChildren<{}>) {
         <NoteListItem key={id} attributes={note.attributes} noteId={id} />
       ))}
 
+      {Object.keys(notes).length === 0 && (
+        <>
+          <h2>You don't have any notes yet</h2>
+          <p>Would you like to add some?</p>
+        </>
+      )}
+
       <Button onClick={addNewNote}>Add a new note</Button>
     </div>
   );
