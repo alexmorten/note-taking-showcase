@@ -28,6 +28,18 @@ export default function Welcome() {
       <p>
         Go to <Link to="/notes">your notes</Link>{" "}
       </p>
+
+      <h2>Show me the code!</h2>
+      <p>
+        Just have a look at the{" "}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/alexmorten/note-taking-showcase"
+        >
+          repo
+        </a>
+      </p>
     </>
   );
 }
