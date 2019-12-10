@@ -7,7 +7,11 @@ export default function Welcome() {
       <h1>What is this?</h1>
       <p>
         This is a simple, light-weight{" "}
-        <a target="_blank" href="https://en.wikipedia.org/wiki/Markdown">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://en.wikipedia.org/wiki/Markdown"
+        >
           markdown
         </a>{" "}
         note taking app.
