@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NoteList from "./pages/NoteList";
 import NoteEdit from "./pages/NoteEdit";
+import Welcome from "./pages/Welcome";
 
 export default function Router(props: React.PropsWithChildren<{}>) {
   return (
@@ -14,8 +15,11 @@ export default function Router(props: React.PropsWithChildren<{}>) {
             return <NoteEdit noteId={noteId} />;
           }}
         />
-        <Route path="/">
+        <Route path="/notes">
           <NoteList />
+        </Route>
+        <Route path="/">
+          <Welcome />
         </Route>
       </Switch>
     </BrowserRouter>
