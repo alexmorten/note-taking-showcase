@@ -143,9 +143,10 @@ export default class Store<AttributesType extends Object> {
   private async saveToPersistentStore() {
     const datumsToUpdate = this.localUpdateQueue.reduce((acc, change) => {
       if (change.changeType === "set") {
-        acc[change.datum.meta.clientId] = this.state.current[
-          change.datum.meta.clientId
-        ];
+        const currentDatum = this.state.current[change.datum.meta.clientId];
+        if (currentDatum !== undefined) {
+          acc[change.datum.meta.clientId] = currentDatum;
+        }
       }
       return acc;
     }, {} as { [k: string]: Datum<AttributesType> });
