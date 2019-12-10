@@ -4,6 +4,7 @@ import NoteForm from "../components/NoteForm";
 import { NoteAttributes } from "../models/note";
 import { Link, useHistory } from "react-router-dom";
 import Button from "../components/Button";
+import { Datum } from "../lib/store";
 
 interface Props {
   noteId: string;
@@ -11,7 +12,9 @@ interface Props {
 
 export default function NoteEdit({ noteId }: React.PropsWithChildren<Props>) {
   const store = useContext(StoreContext);
-  const [note, setNote] = useState(store.currentState()[noteId]);
+  const [note, setNote] = useState(
+    store.currentState()[noteId] as Datum<NoteAttributes> | undefined
+  );
   const history = useHistory();
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export default function NoteEdit({ noteId }: React.PropsWithChildren<Props>) {
     (attributes: NoteAttributes) => {
       const newNote = {
         attributes,
-        meta: { ...note.meta }
+        meta: { ...note!.meta }
       };
 
       store.set(newNote);
@@ -42,15 +45,25 @@ export default function NoteEdit({ noteId }: React.PropsWithChildren<Props>) {
 
   const onNoteDelete = useCallback(() => {
     store.delete(noteId);
-    history.push("/");
+    history.replace("/notes");
   }, [store, noteId, history]);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
+  if (note === undefined) {
+    return (
+      <>
+        <h2>This note doesn't seem to exist</h2>
+        <p>The note behind this page was probably deleted.</p>
+        <Link to="/notes">Back to your notes</Link>
+      </>
+    );
+  }
+
   return (
     <div>
       <h2>
-        <Link to="/">Back to your notes</Link>
+        <Link to="/notes">Back to your notes</Link>
       </h2>
       <NoteForm value={note.attributes} onChange={updateNote} />
       {deleteDialogOpen ? (
