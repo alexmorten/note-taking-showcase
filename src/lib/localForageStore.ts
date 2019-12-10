@@ -1,4 +1,4 @@
-import { PersistentStore, Datum } from "./store";
+import { Datum } from "./store";
 import localforage from "localforage";
 
 export default class LocalForageStore<AttributesType> {

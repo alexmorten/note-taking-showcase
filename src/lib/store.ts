@@ -1,4 +1,3 @@
-import { PersistentStore } from "./store";
 import Emitter from "./emitter";
 import debounce from "lodash/debounce";
 
