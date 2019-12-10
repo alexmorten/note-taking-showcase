@@ -3,7 +3,7 @@ import debounce from "lodash/debounce";
 
 export interface Meta {
   clientId: string;
-  apiId: string | undefined;
+  apiId?: string;
   localDirty: boolean;
   remoteDirty: boolean;
 }
@@ -28,9 +28,13 @@ class State<AttributesType> {
   }
 
   public set(item: Datum<AttributesType>) {
-    this.current[item.meta.clientId] = item;
     item.meta.localDirty = true;
     item.meta.remoteDirty = true;
+
+    this.current = {
+      ...this.current,
+      [item.meta.clientId]: item
+    };
     this.changed.push(item);
   }
 
