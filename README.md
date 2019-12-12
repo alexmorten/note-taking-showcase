@@ -1,3 +1,13 @@
+# Note-taking-showcase
+
+A simple, light-weight markdown note taking app, featuring a simple (and naive) state store implementation that periodically saves updated notes in the background
+
+## Todos
+
+- [ ] add optional backend component to save notes 
+- [ ] add ability to up and download notes as markdown files
+- [ ] make it pretty
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
