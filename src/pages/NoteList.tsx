@@ -36,7 +36,12 @@ export default function NoteList(props: React.PropsWithChildren<{}>) {
   return (
     <div>
       <PageHeader>
-        <h1>Your Notes</h1>
+        <h1 className="marginless">Your Notes</h1>
+        <div className="row-flex-container">
+          <Button white onClick={addNewNote}>
+            Add a new note
+          </Button>
+        </div>
       </PageHeader>
 
       {Object.entries(notes).map(([id, note]) => (
@@ -47,12 +52,11 @@ export default function NoteList(props: React.PropsWithChildren<{}>) {
         <>
           <h2>You don't have any notes yet</h2>
           <p>Would you like to add some?</p>
+          <Button white onClick={addNewNote}>
+            Add a new note
+          </Button>
         </>
       )}
-
-      <Button action onClick={addNewNote}>
-        Add a new note
-      </Button>
     </div>
   );
 }

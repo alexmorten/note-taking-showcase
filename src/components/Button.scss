@@ -10,6 +10,7 @@ $ButtonBorderSize: 1px;
   cursor: pointer;
   margin: 10px;
   background: none;
+  color: inherit;
 }
 
 .Button.small {
@@ -17,8 +18,9 @@ $ButtonBorderSize: 1px;
   font-size: 0.75rem;
 }
 
-.Button.action {
-  border: $ButtonBorderSize solid $actionColor;
+.Button.white {
+  border: $ButtonBorderSize solid white;
+  color: white;
 }
 
 .Button.danger {

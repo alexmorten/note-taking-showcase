@@ -3,7 +3,7 @@ import "./Button.scss";
 interface Props {
   onClick(): void;
   small?: boolean;
-  action?: boolean;
+  white?: boolean;
   danger?: boolean;
 }
 
@@ -11,13 +11,13 @@ export default function Button({
   onClick,
   children,
   small,
-  action,
+  white,
   danger
 }: React.PropsWithChildren<Props>) {
   return (
     <button
       className={`Button${small ? " small" : ""}${danger ? " danger" : ""}${
-        action ? " action" : ""
+        white ? " white" : ""
       }`}
       onClick={onClick}
     >

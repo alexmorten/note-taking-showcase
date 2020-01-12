@@ -80,8 +80,8 @@ export default function NoteEdit({ noteId }: React.PropsWithChildren<Props>) {
   return (
     <div>
       <PageHeader>
-        <h2>Edit your note</h2>
-        <h3 className="left-text">
+        <h2 className="marginless">Edit your note</h2>
+        <h3 className="left-text ">
           <Link className="inherit-color" to="/notes">
             Back to your notes
           </Link>
