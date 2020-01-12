@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { StoreContext } from "../providers/storeContext";
 import Button from "../components/Button";
+import PageHeader from "../components/PageHeader";
 import randomIdentifier from "../utils/randomIdentifier";
 import { useHistory } from "react-router-dom";
 import NoteListItem from "../components/NoteListItem";
@@ -34,7 +35,10 @@ export default function NoteList(props: React.PropsWithChildren<{}>) {
 
   return (
     <div>
-      <h1>Your Notes</h1>
+      <PageHeader>
+        <h1>Your Notes</h1>
+      </PageHeader>
+
       {Object.entries(notes).map(([id, note]) => (
         <NoteListItem key={id} attributes={note.attributes} noteId={id} />
       ))}

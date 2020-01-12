@@ -1,5 +1,7 @@
 @import "../theme.scss";
 
+$ButtonBorderSize: 1px;
+
 .Button {
   font-size: 1rem;
   line-height: 2rem;
@@ -7,7 +9,7 @@
   border-radius: 3px;
   cursor: pointer;
   margin: 10px;
-  background-color: $primaryBackgroundColor;
+  background: none;
 }
 
 .Button.small {
@@ -16,10 +18,10 @@
 }
 
 .Button.action {
-  border: 1px solid $actionColor;
+  border: $ButtonBorderSize solid $actionColor;
 }
 
 .Button.danger {
   color: red;
-  border: 1px solid $dangerColor;
+  border: $ButtonBorderSize solid $dangerColor;
 }

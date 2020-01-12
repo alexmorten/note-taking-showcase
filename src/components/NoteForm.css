@@ -1,11 +1,14 @@
-.NoteForm .MarkDownEditor-container {
+.NoteForm {
   max-width: 1000px;
   margin: auto;
+}
+
+.NoteForm .MarkDownEditor-container {
   border-radius: 5px;
   overflow: hidden;
 }
 
-.NoteForm .MarkDownEditor-container .MarkDownEditor > div {
+.NoteForm .MarkDownEditor-container .MarkDownEditor>div {
   min-height: 100px;
 }
 
@@ -13,7 +16,6 @@
   margin: 20px 0;
   padding: 10px;
   width: 100%;
-  max-width: 1000px;
   line-height: 2rem;
   font-size: 2rem;
   border-radius: 5px;

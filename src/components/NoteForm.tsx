@@ -7,10 +7,12 @@ import "./NoteForm.css";
 interface Props {
   onChange(changedAttributes: NoteAttributes): void;
   value: NoteAttributes;
+  actions?: React.ReactNode[];
 }
 
 export default function NoteForm({
   value,
+  actions,
   onChange
 }: React.PropsWithChildren<Props>) {
   const debouncedOnTextChange = useCallback(
@@ -32,6 +34,13 @@ export default function NoteForm({
         placeholder="Add a title to your note"
         onChange={e => onChange({ ...value, title: e.target.value })}
       />
+      {actions !== undefined && (
+        <div className="row-flex-container">
+          {actions.map(action => (
+            <div className="flex-item">{action}</div>
+          ))}
+        </div>
+      )}
       <div className="MarkDownEditor-container">
         <MarkdownEditor
           className="MarkDownEditor"

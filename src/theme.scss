@@ -1,6 +1,8 @@
 $primaryBackgroundColor: white;
-
-$dangerColor: #D22042;
 $neutralBackgroundColor: #24B694;
 $warningBackgroundColor: #A3B808;
-$actionColor: #30C4C9;
+$headerBackgroundColor: #4A073C;
+
+$contrastColor: white;
+$dangerColor: #D22042;
+$actionColor: $headerBackgroundColor;

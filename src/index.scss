@@ -22,3 +22,17 @@ code {
 .warning {
   color: $warningBackgroundColor;
 }
+
+.left-text {
+  text-align: left;
+}
+
+.row-flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.flex-item {
+  flex: 0 1 auto;
+}

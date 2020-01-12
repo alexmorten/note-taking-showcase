@@ -5,6 +5,7 @@ import { NoteAttributes } from "../models/note";
 import { Link, useHistory } from "react-router-dom";
 import Button from "../components/Button";
 import { Datum } from "../lib/store";
+import PageHeader from "../components/PageHeader";
 
 interface Props {
   noteId: string;
@@ -62,27 +63,36 @@ export default function NoteEdit({ noteId }: React.PropsWithChildren<Props>) {
     );
   }
 
+  const deleteAction = deleteDialogOpen ? (
+    <div>
+      <h4>Are you sure you want to delete this note?</h4>
+      <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+      <Button onClick={onNoteDelete} danger>
+        Yes
+      </Button>
+    </div>
+  ) : (
+    <Button onClick={() => setDeleteDialogOpen(true)} danger>
+      Delete this note
+    </Button>
+  );
+
   return (
     <div>
-      <h2>
-        <Link className="no-underline" to="/notes">
-          Back to your notes
-        </Link>
-      </h2>
-      <NoteForm value={note.attributes} onChange={updateNote} />
-      {deleteDialogOpen ? (
-        <div>
-          <h4>Are you sure you want to delete this note?</h4>
-          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
-          <Button onClick={onNoteDelete} danger>
-            Yes
-          </Button>
-        </div>
-      ) : (
-        <Button onClick={() => setDeleteDialogOpen(true)} danger>
-          Delete this note
-        </Button>
-      )}
+      <PageHeader>
+        <h2>Edit your note</h2>
+        <h3 className="left-text">
+          <Link className="inherit-color" to="/notes">
+            Back to your notes
+          </Link>
+        </h3>
+      </PageHeader>
+
+      <NoteForm
+        value={note.attributes}
+        onChange={updateNote}
+        actions={[deleteAction]}
+      />
     </div>
   );
 }
