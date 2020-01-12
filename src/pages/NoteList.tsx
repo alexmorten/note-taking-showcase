@@ -46,7 +46,9 @@ export default function NoteList(props: React.PropsWithChildren<{}>) {
         </>
       )}
 
-      <Button onClick={addNewNote}>Add a new note</Button>
+      <Button action onClick={addNewNote}>
+        Add a new note
+      </Button>
     </div>
   );
 }
