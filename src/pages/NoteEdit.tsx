@@ -55,7 +55,9 @@ export default function NoteEdit({ noteId }: React.PropsWithChildren<Props>) {
       <>
         <h2>This note doesn't seem to exist</h2>
         <p>The note behind this page was probably deleted.</p>
-        <Link to="/notes">Back to your notes</Link>
+        <Link className="no-underline" to="/notes">
+          Back to your notes
+        </Link>
       </>
     );
   }
@@ -63,7 +65,9 @@ export default function NoteEdit({ noteId }: React.PropsWithChildren<Props>) {
   return (
     <div>
       <h2>
-        <Link to="/notes">Back to your notes</Link>
+        <Link className="no-underline" to="/notes">
+          Back to your notes
+        </Link>
       </h2>
       <NoteForm value={note.attributes} onChange={updateNote} />
       {deleteDialogOpen ? (

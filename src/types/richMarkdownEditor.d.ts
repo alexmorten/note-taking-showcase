@@ -9,6 +9,7 @@ declare module "rich-markdown-editor" {
     readOnly?: boolean;
     toc?: boolean;
     className?: string;
+    placeholder?: string;
   }
 
   export type Theme = {

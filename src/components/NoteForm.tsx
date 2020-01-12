@@ -40,6 +40,7 @@ export default function NoteForm({
           dark
           onChange={debouncedOnTextChange}
           toc
+          placeholder=" "
         />
       </div>
     </div>
